@@ -906,6 +906,8 @@ function processGyms(i, item) {
         content: gymLabel(gym_types[item.team_id], item.team_id, item.gym_points, item.latitude, item.longitude),
         disableAutoPan: true
       });
+      // Store info window.
+      map_data.info_windows[item.gym_id] = map_data.gyms[item.gym_id].marker.infoWindow;
     }
   } else { // add marker to map and item to dict
     if (item.marker) item.marker.setMap(null);
