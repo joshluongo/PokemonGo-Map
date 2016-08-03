@@ -72,6 +72,21 @@
 				margin-left: 0.5em;
 			}
 
+			&[href="#scanhere"] {
+				@include icon('\f041');
+				-webkit-tap-highlight-color: rgba(0,0,0,0);
+
+				min-width: 50px;
+				&:before {
+					margin: 0 0.5em 0 0;
+				}
+			}
+
+			& + a[href="#scanhere"]:last-child {
+				padding-left: 1.25em;
+				margin-left: 0.5em;
+			}
+
 			@include breakpoint(small) {
 				padding: 0 0.5em;
 
@@ -81,6 +96,11 @@
 				}
 
 				& + a[href="#stats"]:last-child {
+					padding-left: 1em;
+					margin-left: 0.25em;
+				}
+
+				& + a[href="#scanhere"]:last-child {
 					padding-left: 1em;
 					margin-left: 0.25em;
 				}

@@ -309,6 +309,11 @@ function initMap() {
     redrawPokemon(map_data.pokemons);
     redrawPokemon(map_data.lure_pokemons);
   });
+
+  $('#scanHere').on('click', function(){
+    var loc = map.getCenter();
+    changeLocation(loc.lat(), loc.lng());
+  });
 }
 
 function createSearchMarker() {
