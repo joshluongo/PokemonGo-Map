@@ -39,7 +39,8 @@ var map_data = {
   gyms: {},
   pokestops: {},
   lure_pokemons: {},
-  scanned: {}
+  scanned: {},
+  info_windows: {}
 };
 var gym_types = ["Uncontested", "Mystic", "Valor", "Instinct"];
 var audio = new Audio('static/sounds/ding.mp3');
@@ -602,6 +603,9 @@ function setupPokemonMarker(item, skipNotification, isBounceDisabled) {
     disableAutoPan: true
   });
 
+  // Store info window.
+  map_data.info_windows[item.encounter_id] = marker.infoWindow;
+
   if (notifiedPokemon.indexOf(item.pokemon_id) > -1) {
     if (!skipNotification) {
       if (Store.get('playSound')) {
@@ -633,6 +637,9 @@ function setupGymMarker(item) {
     disableAutoPan: true
   });
 
+  // Store info window.
+  map_data.info_windows[item.gym_id] = marker.infoWindow;
+
   addListeners(marker);
   return marker;
 }
@@ -660,6 +667,9 @@ function setupPokestopMarker(item) {
     content: pokestopLabel(!!item.lure_expiration, item.last_modified, item.active_pokemon_id, item.latitude, item.longitude),
     disableAutoPan: true
   });
+
+  // Store info window.
+  map_data.info_windows[item.pokestop_id] = marker.infoWindow;
 
   addListeners(marker);
   return marker;
@@ -701,8 +711,15 @@ function clearSelection() {
     }
 };
 
+function clearInfoWindows() {
+    $.each(map_data.info_windows, function(key, value) {
+        value.close();
+    });
+};
+
 function addListeners(marker) {
   marker.addListener('click', function() {
+    clearInfoWindows();
     marker.infoWindow.open(map, marker);
     clearSelection();
     updateLabelDiffTime();
@@ -714,6 +731,7 @@ function addListeners(marker) {
   });
 
   marker.addListener('mouseover', function() {
+    clearInfoWindows();
     marker.infoWindow.open(map, marker);
     clearSelection();
     updateLabelDiffTime();
