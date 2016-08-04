@@ -547,17 +547,6 @@ function pokestopLabel(lured, last_modified, active_pokemon_id, latitude, longit
   return str;
 }
 
-function scannedLabel(last_modified) {
-  scanned_date = new Date(last_modified)
-
-  var contentstring = `
-    <div>
-      Scanned at ${pad(scanned_date.getHours())}:${pad(scanned_date.getMinutes())}:${pad(scanned_date.getSeconds())}
-    </div>`;
-
-  return contentstring;
-}
-
 
 function getGoogleSprite(index, sprite, display_height) {
   display_height = Math.max(display_height, 3);
@@ -804,9 +793,7 @@ function showInBoundsMarkers(markers) {
 
     if (show && !markers[key].marker.getMap()) {
       markers[key].marker.setMap(map);
-      markers[key].marker.setAnimation(markers[key].marker.oldAnimation);
     } else if (!show && markers[key].marker.getMap()) {
-      markers[key].marker.oldAnimation = markers[key].marker.getAnimation();
       markers[key].marker.setMap(null);
     }
   });
